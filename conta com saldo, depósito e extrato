@@ -1,0 +1,57 @@
+menu = 'Para prosseguir digite a letra inicial desejada: D: DEPOSITAR, S: SACAR, E: EXTRATO, Q: SAIR \n'
+saldo = 0
+extrato = ''
+limite = 500
+numero_de_saque = 0
+LIMITE_DE_SAQUE = 3
+
+
+while True:
+    opcao = input(menu)
+
+    if opcao == 'd':
+        valor = float(input('Digite o valor que deseja depositar: \n'))
+        
+        if valor > 0:
+            saldo += valor
+            extrato += f'Depósito de R$ {valor:.2f}\n'
+            print('***DEPÓSITO REALIZADO COM SUCESSO***')
+        else:
+            print('tentativa invalida')
+
+    elif opcao == 's':
+        valor = float(input('Digite o valor que deseja sacar: \n'))
+        
+        excedeu_saldo = valor > saldo
+        excedeu_limite = valor > limite
+        excedeu_saque = numero_de_saque >= LIMITE_DE_SAQUE
+        saque_realizado = valor <= limite
+
+        if excedeu_saldo:
+         print('Você não tem saldo suficiente')
+
+        elif excedeu_limite:
+         print('O seu limite de saque é de R$500, tente novamente com um valor menor ')
+
+        elif excedeu_saque:
+         print('Você não tem mais limite de saque diario. O seu limite é de 3 tentativas.')
+
+        elif valor > 0:
+            saldo -= valor
+            extrato += f'Saque: R$ {valor:.2f}\n'
+            numero_de_saque += 1
+
+    #else:
+          #print('Tente novamente')
+
+    elif opcao == 'e':
+        print('\n *****EXTRATO*****\n')
+        print('Não foram realizadas movimentações' if not extrato else extrato)
+        print(f'\n Saldo: R${saldo:.2f}\n')
+        print('***************************')
+
+
+    elif opcao == 'q':
+        break
+    else:
+        print('Tentativa invalida, selecione uma das opções disponiveis.')
